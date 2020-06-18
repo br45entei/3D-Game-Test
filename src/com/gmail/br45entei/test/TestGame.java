@@ -3,6 +3,7 @@ package com.gmail.br45entei.test;
 import com.gmail.br45entei.game.Game;
 import com.gmail.br45entei.game.graphics.GLUtil;
 import com.gmail.br45entei.game.graphics.Renderer;
+import com.gmail.br45entei.game.input.Mouse;
 import com.gmail.br45entei.game.ui.MenuProvider;
 import com.gmail.br45entei.game.ui.Window;
 
@@ -140,8 +141,13 @@ public class TestGame implements Game, MenuProvider {
 	
 	@Override
 	public void onMouseMoved(int deltaX, int deltaY, int oldX, int oldY, int newX, int newY) {
-		this.mx = newX;
-		this.my = Window.getWindow().getHeight() - newY;
+		if(Mouse.isCaptured()) {
+			this.mx = Math.min(Window.getWindow().getWidth(), Math.max(0, this.mx + deltaX));
+			this.my = Math.min(Window.getWindow().getHeight(), Math.max(0, this.my - deltaY));
+		} else {
+			this.mx = newX;
+			this.my = Window.getWindow().getHeight() - newY;
+		}
 	}
 	
 	@Override
