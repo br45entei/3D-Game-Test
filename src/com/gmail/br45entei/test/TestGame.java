@@ -9,8 +9,12 @@ import com.gmail.br45entei.game.ui.Window;
 
 import java.util.Objects;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.swt.GLData;
 
@@ -42,6 +46,42 @@ public class TestGame implements Game, MenuProvider {
 		window.setActiveRenderer(game);
 		window.registerRenderer(Renderer.colorDemo);
 		window.registerGame(new InterfaceTest());
+		window.registerInputCallback(new InputLogger(System.out) {
+			@Override
+			public void onKeyDown(int key) {
+				//super.onKeyDown(key);
+			}
+			
+			@Override
+			public void onKeyHeld(int key) {
+				//super.onKeyHeld(key);
+			}
+			
+			@Override
+			public void onKeyUp(int key) {
+				//super.onKeyUp(key);
+			}
+			
+			@Override
+			public void onMouseButtonDown(int button) {
+				//super.onMouseButtonDown(button);
+			}
+			
+			@Override
+			public void onMouseButtonHeld(int button) {
+				//super.onMouseButtonHeld(button);
+			}
+			
+			@Override
+			public void onMouseButtonUp(int button) {
+				//super.onMouseButtonUp(button);
+			}
+			
+			@Override
+			public void onMouseMoved(int deltaX, int deltaY, int oldX, int oldY, int newX, int newY) {
+				//super.onMouseMoved(deltaX, deltaY, oldX, oldY, newX, newY);
+			}
+		});
 		window.open();
 	}
 	
@@ -199,7 +239,15 @@ public class TestGame implements Game, MenuProvider {
 	
 	@Override
 	public void onMenuBarCreation(Menu menu) {
-		
+		MenuItem mntmTest = new MenuItem(menu, SWT.NONE);
+		mntmTest.setText("Test Menu Item");
+		mntmTest.setToolTipText("This is a test menu item provided by \"".concat(getName()).concat("\"!"));
+		mntmTest.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("\"Test Menu Item\" was selected!");
+			}
+		});
 	}
 	
 	@Override
